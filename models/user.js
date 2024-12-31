@@ -39,6 +39,11 @@ const userSchema = new mongoose.Schema({
     phoneNum : {
         type : String,
         required : true,
+    },
+
+    whatsNum : {
+        type : String,
+        required : true,
     }
 
  
