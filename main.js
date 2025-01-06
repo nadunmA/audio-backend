@@ -3,10 +3,15 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import userRouter from "./routes/userRouter.js";
 import productRouter from "./routes/productRouter.js";
-import jwt, { decode } from "jsonwebtoken"
+import jwt, { decode } from "jsonwebtoken";
+import dotenv from "dotenv";
+
+//mongo url and secret part hiding part
+dotenv.config();
 
 
 let app = express();
+
 
 app.use(bodyParser.json());
 
@@ -37,14 +42,15 @@ app.use((req, res, next) => {
 
 
 //mongo db drive link
-let mongoDb = "mongodb+srv://admin:nadun1234@cluster0.htd9j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+let mongoDb = process.env.MONGO_URL;
 
 
 
 //connect mongodb
-mongoose.connect(mongoDb)
+mongoose.connect(mongoDb);
 
-let Connection = mongoose.connection
+let Connection = mongoose.connection;
+
 Connection.once("open", () => {
 
     console.log("connection sucessful")
