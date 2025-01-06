@@ -5,6 +5,7 @@ import userRouter from "./routes/userRouter.js";
 import productRouter from "./routes/productRouter.js";
 import jwt, { decode } from "jsonwebtoken";
 import dotenv from "dotenv";
+import portfinder from "portfinder";
 
 //mongo url and secret part hiding part
 dotenv.config();
@@ -23,7 +24,7 @@ app.use((req, res, next) => {
     if(token != null){
         token = token.replace("Bearer", "")
     
-        jwt.verify(token, "nm1234",
+        jwt.verify(token, process.env.JWT_SECRET,
             (err, decode) => {
 
                 if(!err){
@@ -69,7 +70,7 @@ app.use("/api/product", productRouter)
 
 //local host connector
 
-app.listen(3000, () => {
+app.listen(4000, () => {
     console.log("server is running");
 });
 
