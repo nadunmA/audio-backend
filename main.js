@@ -6,6 +6,7 @@ import productRouter from "./routes/productRouter.js";
 import jwt, { decode } from "jsonwebtoken";
 import dotenv from "dotenv";
 import portfinder from "portfinder";
+import reviewRouter from "./routes/reviewRouter.js";
 
 //mongo url and secret part hiding part
 dotenv.config();
@@ -63,17 +64,23 @@ Connection.once("open", () => {
 
 app.use("/api/users", userRouter)
 app.use("/api/product", productRouter)
-
+app.use("/api/review", reviewRouter)
 
 
 
 
 //local host connector
 
-app.listen(4000, () => {
+app.listen(3003, () => {
     console.log("server is running");
 });
 
 
 
 
+//"email": "johndoe21@example.com",
+//"password": "password12356",
+
+
+//"email": "admin89@example.com",
+//"password": "password1235",
