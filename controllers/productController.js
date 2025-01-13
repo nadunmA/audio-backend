@@ -1,4 +1,5 @@
 import Product from "../models/product.js";
+import { isItAdmin } from "./userController.js";
 
 export function addProduct(req, res){
 
@@ -31,18 +32,10 @@ export function addProduct(req, res){
 
 
 export async function getProduct(req,res) {
-    
-    let isAdmin = false;
-
-    if(req.user != null && req.user.role == "admin"){
-
-        isAdmin = true;
-
-    }
 
     try {
 
-        if(isAdmin){
+        if(isItAdmin(req)){
             
             const product = await Product.find;
             ({availability : true});
@@ -63,6 +56,73 @@ export async function getProduct(req,res) {
             message : "failed to get product"
         })
         
+    }
+    
+}
+
+
+export async function updateProduct(req, res) {
+
+    try {
+
+        if(isItAdmin(req)){
+
+            const key = req.params.key;
+            const data = req.body
+
+            await Product.updateOne({key:key}, data)
+
+            res.json({
+                message : "product update sucess"
+            })
+            return;
+
+        }else{
+            res.status(403).json({
+                message : "you are not authrized to perofem this action"
+            })
+        }
+
+        
+    } catch (e) {
+
+        res.status(500).json({
+            message : "failed to update product"
+        })
+        
+    }
+    
+}
+
+export async function deleteProduct(req,res) {
+
+    try{
+
+        if(isItAdmin(req)){
+
+            const key = req.params.key;
+        
+            await Product.deleteOne({key:key})
+
+            res.json({
+                message : "product delete sucess"
+            })
+
+        }else{
+
+            res.status(403).json({
+                message : "you cannot delete"
+            })
+            return;
+        }
+            
+
+    }catch(error){
+
+        res.status(500).json({
+            message : "fialed to delete product"
+        })
+
     }
     
 }
