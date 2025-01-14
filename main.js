@@ -7,6 +7,7 @@ import jwt, { decode } from "jsonwebtoken";
 import dotenv from "dotenv";
 import portfinder from "portfinder";
 import reviewRouter from "./routes/reviewRouter.js";
+import InquiryRouter from "./routes/inquiryRouter.js";
 
 //mongo url and secret part hiding part
 dotenv.config();
@@ -62,9 +63,10 @@ Connection.once("open", () => {
 
 
 
-app.use("/api/users", userRouter)
-app.use("/api/product", productRouter)
-app.use("/api/review", reviewRouter)
+app.use("/api/users", userRouter);
+app.use("/api/product", productRouter);
+app.use("/api/review", reviewRouter);
+app.use("/api/inqiuiry", InquiryRouter);
 
 
 
